@@ -23,7 +23,7 @@ public class UserService {
 	private TokenService tokenService;
 	
 	@Autowired
-	private TokenExtractor tokenExtractor;
+	private TokenExtractorService tokenExtractor;
 
 	public Optional<User> findById(Long id) {
 		return userRepository.findById(id);
@@ -36,7 +36,7 @@ public class UserService {
 	public Optional<User> getLoggedUser() {
 		String extractedToken = tokenExtractor.extractRequestToken(request);
 		
-		if (extractedToken == null) {
+		if (extractedToken == null || !tokenService.isValidToken(extractedToken)) {
 			return Optional.empty();
 		}
 		
