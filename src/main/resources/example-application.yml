@@ -1,0 +1,23 @@
+#forum config
+forum:
+  jwt:
+    expiration: 86400000
+    secret: you-secret
+# data source 
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/forum?zeroDateTimeBehavior=CONVERT_TO_NULL
+    username: your-user
+    password: your-password
+# jpa
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        
+        
