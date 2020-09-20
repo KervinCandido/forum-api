@@ -15,7 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 
-import com.github.kervincandido.forum.service.TokenStringExtractorService;
+import com.github.kervincandido.forum.service.TokenExtractorService;
 import com.github.kervincandido.forum.service.TokenService;
 import com.github.kervincandido.forum.service.UserService;
 
@@ -28,7 +28,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	private TokenService tokenService;
 	
 	@Autowired
-	private TokenStringExtractorService tokenExtractor;
+	private TokenExtractorService tokenExtractor;
 	
 	@Autowired
 	private UserService userService;

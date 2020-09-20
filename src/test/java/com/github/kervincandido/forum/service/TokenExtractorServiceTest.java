@@ -1,20 +1,19 @@
 package com.github.kervincandido.forum.service;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
-
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.when;
 
-import javax.servlet.http.HttpServletRequest;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -23,13 +22,11 @@ public class TokenExtractorServiceTest {
 	@Autowired
 	private TokenExtractorService tokenExtractorService;
 	
-	@MockBean
-	private HttpServletRequest request;
-	
 	@Test
 	public void deveExtrairTokenDaRequisicaoEDevolver() {
-		when(request.getHeader("Authorization"))
-			.thenReturn("Bearer token");
+		MockHttpServletRequest request = new MockHttpServletRequest();
+		RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+		request.addHeader("Authorization", "Bearer token");
 		
 		String extractRequestToken = tokenExtractorService.extractRequestToken(request);
 		assertThat(extractRequestToken, is(notNullValue()));
@@ -45,8 +42,8 @@ public class TokenExtractorServiceTest {
 	
 	@Test
 	public void devolveNullSeNaoTiverTokenNaRequisicao() {
-		when(request.getHeader("Authorization"))
-			.thenReturn(null);
+		MockHttpServletRequest request = new MockHttpServletRequest();
+		RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
 		
 		String extractRequestToken = tokenExtractorService.extractRequestToken(request);
 		assertThat(extractRequestToken, is(nullValue()));

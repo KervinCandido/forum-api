@@ -13,7 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.github.kervincandido.forum.model.User;
-import com.github.kervincandido.forum.service.TokenStringExtractorService;
+import com.github.kervincandido.forum.service.TokenExtractorService;
 import com.github.kervincandido.forum.service.TokenService;
 import com.github.kervincandido.forum.service.UserService;
 
@@ -21,9 +21,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
 	private TokenService tokenService;
 	private UserService userService;
-	private TokenStringExtractorService tokenExtractor;
+	private TokenExtractorService tokenExtractor;
 	
-	public TokenAuthenticationFilter(TokenService tokenService, TokenStringExtractorService tokenExtractor, UserService userService) {
+	public TokenAuthenticationFilter(TokenService tokenService, TokenExtractorService tokenExtractor, UserService userService) {
 		this.tokenService = tokenService;
 		this.tokenExtractor = tokenExtractor;
 		this.userService = userService;
